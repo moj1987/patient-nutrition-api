@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   patch "patients/:id", to: "patients#update"
   delete "patients/:id", to: "patients#destroy"
 
+  resources :food_items, only: [ :index, :show, :create ]
 end

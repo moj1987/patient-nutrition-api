@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_12_29_181106) do
+ActiveRecord::Schema[8.1].define(version: 2025_12_31_211900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "food_items", force: :cascade do |t|
+    t.integer "calories"
+    t.decimal "carbs"
+    t.datetime "created_at", null: false
+    t.decimal "fat"
+    t.string "name"
+    t.decimal "protein"
+    t.datetime "updated_at", null: false
+  end
 
   create_table "patients", force: :cascade do |t|
     t.date "admition_date"
