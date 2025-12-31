@@ -3,6 +3,7 @@ class PatientsController < ApplicationController
       @patients = Patient.all
       render json: @patients
   end
+
   def show
     @patient = Patient.find(params[:id])
     render json: @patient
@@ -17,5 +18,15 @@ class PatientsController < ApplicationController
   end
   def patient_params
     params.require(:patient).permit(:name, :age, :room_number, :dietery_restrictions, :admition_date, :status)
+  end
+
+  def update
+    @patient = Patient.find(params[:id])
+
+    if @patient.update(patient_params)
+      render json: @patient, status: :ok
+    else
+      render json: @patient.errors, status: :unprocessable_entity
+    end
   end
 end

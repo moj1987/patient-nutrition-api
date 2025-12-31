@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   post "patients", to: "patients#create"
+
+  patch "patients/:id", to: "patients#update"
 end
