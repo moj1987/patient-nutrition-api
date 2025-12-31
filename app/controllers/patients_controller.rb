@@ -29,4 +29,9 @@ class PatientsController < ApplicationController
       render json: @patient.errors, status: :unprocessable_entity
     end
   end
+  def destroy
+    @patient = Patient.find(params[:id])
+    @patient.destroy
+    head :no_content
+  end
 end

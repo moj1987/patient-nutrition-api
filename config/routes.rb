@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   post "patients", to: "patients#create"
 
   patch "patients/:id", to: "patients#update"
+  delete "patients/:id", to: "patients#destroy"
+
 end
