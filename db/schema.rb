@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_01_012301) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_01_191724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -22,6 +22,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_01_012301) do
     t.string "name"
     t.decimal "protein"
     t.datetime "updated_at", null: false
+  end
+
+  create_table "meal_food_items", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "food_item_id", null: false
+    t.bigint "meal_id", null: false
+    t.decimal "portion_size"
+    t.datetime "updated_at", null: false
+    t.index ["food_item_id"], name: "index_meal_food_items_on_food_item_id"
+    t.index ["meal_id"], name: "index_meal_food_items_on_meal_id"
   end
 
   create_table "meals", force: :cascade do |t|
@@ -44,5 +54,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_01_012301) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "meal_food_items", "food_items"
+  add_foreign_key "meal_food_items", "meals"
   add_foreign_key "meals", "patients"
 end
