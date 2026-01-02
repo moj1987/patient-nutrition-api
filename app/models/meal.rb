@@ -5,4 +5,7 @@ class Meal < ApplicationRecord
 
   enum :status, { served: "served", scheduled: "scheduled", skipped: "skipped" }
   enum :meal_type, { breakfast: "breakfast", lunch: "lunch", dinner: "dinner", snack: "snack" }
+
+  validates :meal_type, presence: true
+  validates :status, presence: true
 end

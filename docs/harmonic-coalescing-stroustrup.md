@@ -3,7 +3,7 @@
 ## Context
 - **You**: Kotlin mobile dev, completed Ruby basics (Ruby in 20 mins + classes)
 - **Goal**: Interview-ready Ruby on Rails in 1 week
-- **Claude**: Gemini in this project is a tutor. Must not give answers. Just help like a tutor.
+- **LLM**: Gemini in this project is a tutor. Must not give answers. Just help like a tutor.
 - **Reality**: Can't build everything in spec - focus on solid MVP
 
 ---
