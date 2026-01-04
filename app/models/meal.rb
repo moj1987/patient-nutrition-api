@@ -1,6 +1,6 @@
 class Meal < ApplicationRecord
   belongs_to :patient
-  has_many :meal_food_items
+  has_many :meal_food_items, before_add: :dietary_restrictions_not_violated
   has_many :food_items, through: :meal_food_items
 
   enum :status, { served: "served", scheduled: "scheduled", skipped: "skipped" }
@@ -8,7 +8,6 @@ class Meal < ApplicationRecord
 
   validates :meal_type, presence: true
   validates :status, presence: true
-  validates :dietry_restrictions_not_violated, on: :create
 
   def nutrition_summary
     {
@@ -62,9 +61,20 @@ class Meal < ApplicationRecord
     end
     restrictions.any?
   end
-  def dietry_restrictions_not_violated
-    if does_violate_dietry_restriction
+
+  # TODO remove raise as it'll throw 500
+  # it will not now as throw returns
+  def dietary_restrictions_not_violated(added_item)
+    food_item = added_item.food_item
+    food_restrictions = food_item.dietary_restrictions || []
+    patient_restrictions = patient.dietary_restrictions || []
+
+    if (food_restrictions & patient_restrictions).any?
       errors.add(:base, "The patient cannot have this food due to dietry restrictions.")
+      # this returns at throw and will not get to raise!!!
+      # keeping raise for learning purposes
+      throw(:abort)
+      raise "The patient cannot have this food due to dietry restrictions."
     end
   end
 end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Patient, type: :model do
   it "is valid with valid attributes" do
-    patient = Patient.new(name: "Jane Doe", age: 80, room_number: "202A", status: 'active')
+    patient = Patient.new(name: "Jane Doe", age: 80, room_number: "202A", status: 'active', dietary_restrictions: [ "gluten", "vegetarian" ])
     expect(patient).to be_valid
   end
 
@@ -39,5 +39,10 @@ RSpec.describe Patient, type: :model do
   it "raises an ArgumentError for an invalid status" do
     expect { Patient.new(name: "Jane Doe", age: 80, room_number: "202A", status: 'invalid_status') }
     .to raise_error(ArgumentError)
+  end
+
+  it "rejects invalid dietary restrictions" do
+    patient = Patient.new(name: "Jane Doe", age: 80, room_number: "202A", status: 'active', dietary_restrictions: [ "bread", "pasta" ])
+    expect(patient).not_to be_valid
   end
 end

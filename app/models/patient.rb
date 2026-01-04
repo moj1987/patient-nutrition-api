@@ -1,4 +1,6 @@
 class Patient < ApplicationRecord
+    include DietaryRestrictionValidation
+
     has_many :meals
     enum :status, { active: 0, discharged: 1 }
 
