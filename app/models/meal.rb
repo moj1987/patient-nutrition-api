@@ -8,6 +8,7 @@ class Meal < ApplicationRecord
 
   validates :meal_type, presence: true
   validates :status, presence: true
+  validates :dietry_restrictions_not_violated, on: :create
 
   def nutrition_summary
     {
@@ -48,5 +49,22 @@ class Meal < ApplicationRecord
       total +=  mfi.food_item.fat * mfi.portion_size
     end
     total
+  end
+  def get_restrictions
+    self.patient.dietary_restrictions || []
+  end
+  def does_violate_dietry_restriction
+    restrictions = []
+    self.meal_food_items.each do |mfi|
+      food_item_restrictions = mfi.food_item.dietary_restrictions || []
+      common_restrictions = food_item_restrictions & get_restrictions
+      restrictions.concat(common_restrictions)
+    end
+    restrictions.any?
+  end
+  def dietry_restrictions_not_violated
+    if does_violate_dietry_restriction
+      errors.add(:base, "The patient cannot have this food due to dietry restrictions.")
+    end
   end
 end
