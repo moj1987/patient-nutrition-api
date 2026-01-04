@@ -36,12 +36,12 @@
 ## Week Timeline
 
 ### Days 1-2: Rails Setup + Models
-- [ ] Install PostgreSQL
-- [ ] Initialize Rails API project (`rails new`)
-- [ ] Create migrations for 4 tables (patients, food_items, meals, meal_food_items)
-- [ ] Build models with associations (`has_many`, `belongs_to`, `has_many :through`)
-- [ ] Add validations (presence, length, format, enums)
-- [ ] Write model specs
+- [x] Install PostgreSQL
+- [x] Initialize Rails API project (`rails new`)
+- [x] Create migrations for 4 tables (patients, food_items, meals, meal_food_items)
+- [x] Build models with associations (`has_many`, `belongs_to`, `has_many :through`)
+- [x] Add validations (presence, length, format, enums)
+- [x] Write model specs
 
 **Rails Guides to Read:**
 - Getting Started
@@ -50,11 +50,11 @@
 - Active Record Validations
 
 ### Days 3-4: Controllers + Routes
-- [ ] Build PatientsController (index, show, create, update, destroy)
-- [ ] Build FoodItemsController (index, show, create)
-- [ ] Build MealsController (nested routes)
-- [ ] Strong parameters + error handling
-- [ ] Write request specs for endpoints
+- [x] Build PatientsController (index, show, create, update, destroy)
+- [x] Build FoodItemsController (index, show, create)
+- [x] Build MealsController (nested routes)
+- [x] Strong parameters + error handling
+- [x] Write request specs for endpoints
 
 **Rails Guides to Read:**
 - Action Controller Overview
@@ -62,9 +62,9 @@
 - API-only Applications
 
 ### Days 5-6: Testing + Business Logic
-- [ ] Set up RSpec + FactoryBot
-- [ ] Write comprehensive model tests
-- [ ] Write request specs (happy + error paths)
+- [x] Set up RSpec + FactoryBot
+- [x] Write comprehensive model tests
+- [x] Write request specs (happy + error paths)
 - [ ] Add nutrition calculation method
 - [ ] Add dietary restriction validation
 - [ ] Test with Postman/curl
