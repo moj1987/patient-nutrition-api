@@ -11,4 +11,8 @@ Rails.application.routes.draw do
 
   get "/patients/:patient_id/meals", to: "meals#index"
   post "/patients/:patient_id/meals", to: "meals#create"
+
+  resources :meals, only: [ :show ] do
+    resources :meal_food_items, only: [ :create ]
+  end
 end

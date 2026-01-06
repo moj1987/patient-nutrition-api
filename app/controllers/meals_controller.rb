@@ -11,7 +11,12 @@ class MealsController < ApplicationController
 
   # GET /meals/1
   def show
-    render json: @meal
+    @meal = Meal.find(params[:id])
+    render json: {
+      meal_type: @meal.meal_type,
+      status: @meal.status,
+      nutrition_summary: @meal.nutrition_summary
+    }
   end
 
   # POST /meals
