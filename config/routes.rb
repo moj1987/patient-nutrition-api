@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
-
+  post "reset_db", to: "application#reset_db"
   get "patients/index"
   get "patients/:id", to: "patients#show"
   post "patients", to: "patients#create"
