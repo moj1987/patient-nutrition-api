@@ -52,15 +52,6 @@ class Meal < ApplicationRecord
   def get_restrictions
     self.patient.dietary_restrictions || []
   end
-  def does_violate_dietry_restriction
-    restrictions = []
-    self.meal_food_items.each do |mfi|
-      food_item_restrictions = mfi.food_item.dietary_restrictions || []
-      common_restrictions = food_item_restrictions & get_restrictions
-      restrictions.concat(common_restrictions)
-    end
-    restrictions.any?
-  end
 
   # TODO remove raise as it'll throw 500
   # it will not now as throw returns
@@ -70,7 +61,7 @@ class Meal < ApplicationRecord
     patient_restrictions = patient.dietary_restrictions || []
 
     if (food_restrictions & patient_restrictions).any?
-      errors.add(:base, "The patient cannot have this food due to dietry restrictions.")
+      errors.add(:base, "The patient cannot have this food due to dietary restrictions.")
       # this returns at throw and will not get to raise!!!
       # keeping raise for learning purposes
       throw(:abort)
