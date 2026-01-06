@@ -4,7 +4,7 @@ class MealFoodItemsController < ApplicationController
     @meal = Meal.find(params[:meal_id])
     @meal_food_item = @meal.meal_food_items.create!(meal_food_items_params)
 
-    render json: @meal_food_item, status: :created
+  render json: @meal_food_item.as_json(except: [ :created_at, :updated_at ]), status: :created
 
   rescue ActiveRecord::RecordInvalid => e
     render json: { errors: e.message }, status: :unprocessable_entity

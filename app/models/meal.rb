@@ -11,10 +11,10 @@ class Meal < ApplicationRecord
 
   def nutrition_summary
     {
-      calories: calculate_calories,
-      protein: calculate_protein,
-      carbs: calculate_carbs,
-      fat: calculate_fat
+      calories: calculate_calories.to_f,
+      protein: calculate_protein.to_f,
+      carbs: calculate_carbs.to_f,
+      fat: calculate_fat.to_f
     }
   end
 
