@@ -7,7 +7,7 @@ class MealFoodItemsController < ApplicationController
     if @meal_food_item.persisted?
       render json: @meal_food_item.as_json(except: [ :created_at, :updated_at ]), status: :created
     else
-      render json: { errors: @meal.errors.messages }, status: :unprocessable_entity
+      render json: { errors: @meal.errors.messages }, status: :unprocessable_content
     end
   end
 
