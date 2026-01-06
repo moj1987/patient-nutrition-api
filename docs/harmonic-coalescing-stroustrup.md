@@ -65,19 +65,19 @@
 - [x] Set up RSpec + FactoryBot
 - [x] Write comprehensive model tests
 - [x] Write request specs (happy + error paths)
-- [ ] Add nutrition calculation method
-- [ ] Add dietary restriction validation
-- [ ] Test with Postman/curl
+- [x] Add nutrition calculation method
+- [x] Add dietary restriction validation
+- [x] Test with Postman/curl
 
 **Documentation to Read:**
 - RSpec Rails guide
 - FactoryBot getting started
 
 ### Day 7: Polish
-- [ ] Create seed data (realistic examples)
-- [ ] Write README (setup, endpoints, design decisions)
-- [ ] Test entire flow end-to-end
-- [ ] Fix bugs
+- [x] Create seed data (realistic examples)
+- [x] Write README (setup, endpoints, design decisions)
+- [x] Test entire flow end-to-end
+- [x] Fix bugs
 - [ ] Optional: deploy to Heroku/Railway
 
 ---

@@ -1,24 +1,44 @@
-# README
+# Patient Nutrition API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Rails API for managing patient meals with dietary restrictions and nutrition tracking.
 
-Things you may want to cover:
+## Setup
 
-* Ruby version
+```bash
+bundle install
+rails db:create db:migrate
+rails db:seed
+rails s
+```
 
-* System dependencies
+## Features
 
-* Configuration
+- Patient management with dietary restrictions
+- Food item database with nutrition data
+- Meal planning and nutrition calculation
+- Dietary restriction validation
+- JSONB for array data
 
-* Database creation
+## Quick Start
 
-* Database initialization
+```bash
+# Create patient
+curl -X POST http://localhost:3000/patients \
+  -H "Content-Type: application/json" \
+  -d '{"name":"John","age":45,"room_number":"101","dietary_restrictions":["gluten"],"status":"active"}'
 
-* How to run the test suite
+# Add food to meal
+curl -X POST http://localhost:3000/meals/1/meal_food_items \
+  -H "Content-Type: application/json" \
+  -d '{"meal_food_item":{"food_item_id":1,"portion_size":1.0}}'
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Testing
 
-* Deployment instructions
+```bash
+bundle exec rspec
+```
 
-* ...
+## API Documentation
+
+See [API_DOCS.md](./API_DOCS.md) for detailed endpoints and data models.
