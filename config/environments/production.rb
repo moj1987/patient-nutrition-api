@@ -1,6 +1,15 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  # Disable asset pipeline for API-only app
+  config.assets.compile = false
+  config.assets.digest = false
+  config.assets.enabled = false
+
+# Clear asset tasks that don't exist in API-only app
+Rake::Task["assets:precompile"].clear if defined?(Rake::Task["assets:precompile"])
+Rake::Task["assets:clean"].clear if defined?(Rake::Task["assets:clean"])
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
