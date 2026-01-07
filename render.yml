@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: patient-nutrition-api
+    env: ruby
+    buildCommand: "bundle install && bundle exec rails db:migrate"
+    startCommand: "bundle exec rails server -e production -p $PORT"
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RACK_ENV
+        value: production
+      - key: SECRET_KEY_BASE
+        generateValue: true
