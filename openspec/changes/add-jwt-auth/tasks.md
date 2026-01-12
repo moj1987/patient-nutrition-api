@@ -1,16 +1,27 @@
 ## 1. Implementation
-- [ ] 1.1 Add JWT and Redis gems to Gemfile
-- [ ] 1.2 Create User model with email only
-- [ ] 1.3 Create authentication controller with OTP request and token endpoints
-- [ ] 1.4 Implement OTP code generation and storage service (Redis)
-- [ ] 1.5 Implement JWT token generation and validation service
-- [ ] 1.6 Add authentication middleware to protect routes
-- [ ] 1.7 Update routes to include auth endpoints and protect existing ones
-- [ ] 1.8 Create database migration for users table
-- [ ] 1.9 Set up email delivery for OTP codes
-- [ ] 1.10 Write tests for OTP request and authentication endpoints
-- [ ] 1.11 Write tests for authentication middleware
-- [ ] 1.12 Update existing controller tests to handle authentication
+- [x] 1.1 Add JWT and Redis gems to Gemfile
+- [x] 1.2 Create User model with email only
+- [x] 1.3 Create authentication controller with OTP endpoints
+- [x] 1.4 Implement OTP code generation and storage service (Redis)
+- [x] 1.5 Implement JWT token generation and validation service
+- [x] 1.6 Add authentication middleware to protect routes
+- [x] 1.7 Update routes to include auth endpoints and protect existing ones
+- [x] 1.8 Create database migration for users table
+- [x] 1.9 Set up email delivery for OTP codes
+- [x] 1.10 Write tests for OTP request and authentication endpoints
+- [x] 1.11 Write tests for authentication middleware
+- [x] 1.12 Update existing controller tests to handle authentication
+- [x] 1.13 Remove v1 namespace and update existing controllers directly
+- [x] 1.14 Remove user-patient relationship and implement admin pattern
+- [x] 1.15 Revert all v1 controller implementations
+- [x] 1.16 Fix existing model tests to work with authentication
+- [x] 1.17 Add rails-controller-testing gem for test helpers
+- [x] 1.18 Fix authentication controller namespace (Auth::AuthenticationController)
+- [x] 1.19 Update all existing controller tests with JWT headers
+- [x] 1.20 Fix parameter name issues (quantity → portion_size)
+- [x] 1.21 Fix enum validation error handling in tests
+- [x] 1.22 Mock Redis dependencies in service tests
+- [x] 1.23 Consolidate user migrations into single file
 
 ## 2. Test Plan for JWT + Email OTP Flow
 

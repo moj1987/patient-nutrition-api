@@ -9,6 +9,8 @@ The API currently has no authentication mechanism, exposing all patient nutritio
 - Add short-lived JWT token issuance after OTP verification
 - Add authentication middleware to protect API routes
 - **BREAKING**: All existing endpoints will require authentication except health check and auth endpoints
+- Use admin user pattern - single admin manages all patients (no 1-to-many user-patient relationship)
+- Update existing controllers directly (no v1 namespace)
 
 ## Impact
 - Affected specs: New authentication capability

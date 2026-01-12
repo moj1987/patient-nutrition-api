@@ -12,10 +12,16 @@ The patient nutrition API currently has no authentication mechanism, exposing al
   - Why: Fast expiration, automatic cleanup, scalable
 - Decision: Issue short-lived JWT tokens (5 minutes)
   - Why: Stateless, reduces token theft impact, forces fresh authentication
-- Decision: Auto-create user accounts on first successful auth
-  - Why: Simplifies user management, no registration required
+- Decision: Use admin user pattern
+  - Why: Single admin manages all patients, simpler than user-patient relationships
 - Decision: Use ActionMailer for email delivery
   - Why: Rails standard, configurable for development/production
+
+## User Model Implementation
+The `User.find_or_create_by_email` method uses Rails' built-in `find_or_create_by` dynamic finder:
+- `find_or_create_by(email: email.downcase.strip)` automatically creates a `find_or_create_by_email` method
+- This method calls `find_by(email: ...)` and if no record exists, calls `create(email: ...)`
+- It's a Rails convention that eliminates the need for explicit conditional logic
 
 ## Risks / Trade-offs
 - Risk: Email delivery delays → Mitigation: Use reliable email service, provide clear error messages
@@ -29,7 +35,7 @@ The patient nutrition API currently has no authentication mechanism, exposing al
 3. Create authentication endpoints
 4. Add JWT token service
 5. Implement authentication middleware
-6. Protect existing routes
+6. Protect existing routes (update existing controllers, no v1 namespace)
 7. Set up email delivery
 8. Update tests and documentation
 
