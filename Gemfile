@@ -35,12 +35,21 @@ gem "image_processing", "~> 1.2"
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 # gem "rack-cors"
 
+# JWT token generation and validation
+gem "jwt"
+
+# Redis for OTP code storage
+gem "redis"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Audits gems for known security defects (use config/bundler-audit.yml to ignore issues)
   gem "bundler-audit", require: false
+
+  # Rails controller testing helpers
+  gem "rails-controller-testing"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
@@ -52,4 +61,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "shoulda-matchers"
+
+  # Email preview in development
+  gem "letter_opener"
 end
