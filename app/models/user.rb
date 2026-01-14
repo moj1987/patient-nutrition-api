@@ -6,6 +6,6 @@ class User < ApplicationRecord
   end
 
   def self.admin
-    first || create!(email: "mojtaba.abbasszadeh@gmail.com")
+    first || create!(email: "m29038015@gmail.com")
   end
 end

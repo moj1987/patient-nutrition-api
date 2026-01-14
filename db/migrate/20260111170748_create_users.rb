@@ -7,6 +7,6 @@ class CreateUsers < ActiveRecord::Migration[8.1]
     end
 
     # Create default admin user
-    User.create!(email: 'mojtaba.abbasszadeh@gmail.com')
+    User.create!(email: 'm29038015@gmail.com')
   end
 end
