@@ -1,9 +1,11 @@
 class MealsController < ApplicationController
+  include Authentication
+
+  before_action :set_patient
   before_action :set_meal, only: %i[ show update destroy ]
 
   # GET /meals
   def index
-    @patient = Patient.find(params[:patient_id])
     @meals = @patient.meals
 
     render json: @meals
@@ -11,7 +13,6 @@ class MealsController < ApplicationController
 
   # GET /meals/1
   def show
-    @meal = Meal.find(params[:id])
     render json: {
       meal_type: @meal.meal_type,
       status: @meal.status,
@@ -21,7 +22,6 @@ class MealsController < ApplicationController
 
   # POST /meals
   def create
-    @patient = Patient.find(params[:patient_id])
     @meal = @patient.meals.new(meal_params)
 
     if @meal.save
@@ -48,11 +48,17 @@ class MealsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_meal
-      @meal = Meal.find(params.expect(:id))
+      @meal = Meal.find(params[:id])
+    end
+
+    def set_patient
+      @patient = Patient.find(params[:patient_id])
+    rescue ActiveRecord::RecordNotFound
+      render json: { error: "Patient not found" }, status: :not_found
     end
 
     # Only allow a list of trusted parameters through.
     def meal_params
-      params.require(:meal).permit(:meal_type, :status)
+      params.require(:meal).permit(:meal_type, :status, :scheduled_at)
     end
 end

@@ -1,4 +1,6 @@
 class FoodItemsController < ApplicationController
+  include Authentication
+
   def index
     @food_items = FoodItem.all
     render json: @food_items
@@ -10,7 +12,7 @@ class FoodItemsController < ApplicationController
   end
 
   def create
-    @food_item = FoodItem.new(food_items_params)
+    @food_item = FoodItem.new(food_item_params)
     if @food_item.save
       render json: @food_item, status: :created
     else
@@ -19,7 +21,14 @@ class FoodItemsController < ApplicationController
   end
 
   private
-  def food_items_params
-    params.require(:food_item).permit(:name, :calories, :protein, :carbs, :fat, dietary_restrictions: [])
+
+  def set_food_item
+    @food_item = FoodItem.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render json: { error: "Food item not found" }, status: :not_found
+  end
+
+  def food_item_params
+    params.require(:food_item).permit(:name, :calories, :protein, :carbs, :fat, :fiber, :sugar, :sodium, dietary_restrictions: [])
   end
 end
