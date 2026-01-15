@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   # Authentication endpoints (public)
   namespace :auth do
-    post "token", to: "authentication#getToken"
+    post "request-otp", to: "authentication#request_otp"
+    post "verify-otp", to: "authentication#verify_otp"
   end
 
   # Protected endpoints (require authentication)
