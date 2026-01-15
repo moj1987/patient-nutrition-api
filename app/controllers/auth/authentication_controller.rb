@@ -18,8 +18,11 @@ class Auth::AuthenticationController < ApplicationController
 
     # Send OTP email
     begin
+      Rails.logger.info "Attempting to send OTP email to #{email}"
       OtpMailer.send_otp(email, otp).deliver_now
-    rescue StandardError
+    rescue StandardError => e
+      Rails.logger.error "SMTP Error: #{e.message}"
+      Rails.logger.error "Error Class: #{e.class}"
       # Continue even if email fails
     end
 
