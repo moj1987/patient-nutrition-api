@@ -24,12 +24,12 @@
 9. Search/filtering (by name, dietary restrictions, dates)
 10. Error handling (consistent JSON responses)
 
-### Skip for Now
-- Background jobs (Sidekiq)
-- Caching (Redis)
-- JWT authentication
-- Deployment
-- Advanced analytics
+### Skip for Now (Priority Order)
+1. JWT authentication
+2. Background jobs (Sidekiq)
+3. Caching (Redis)
+4. Deployment
+5. Advanced analytics
 
 ---
 
