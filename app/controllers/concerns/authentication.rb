@@ -29,11 +29,14 @@ module Authentication
     end
 
     begin
-      JwtService.decode(token) # Just validate token is valid
-      @current_user = User.admin # Single admin user manages all patients
+      payload = JwtService.decode(token)
+      user_id = payload["user_id"]
+      @current_user = User.find(user_id)
     rescue JwtService::Error::TokenExpired
       render json: { error: "Token expired" }, status: :unauthorized
     rescue JwtService::Error::InvalidToken
+      render json: { error: "Invalid token" }, status: :unauthorized
+    rescue ActiveRecord::RecordNotFound
       render json: { error: "Invalid token" }, status: :unauthorized
     end
   end
