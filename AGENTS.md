@@ -13,6 +13,21 @@ Use `@/openspec/AGENTS.md` to learn:
 - Spec format and conventions
 - Project structure and guidelines
 
+## Skill Creation Requirements
+
+When creating skills, ALWAYS follow this structure:
+- Directory: `.windsurf/skills/<skill-name>/`
+- Main file: `SKILL.md` (UPPERCASE)
+- Required frontmatter: `name` and `description` only
+- Optional: `scripts/`, `references/`, `assets/` directories
+
+FORBIDDEN:
+- Creating `.md` files directly in `.windsurf/skills/`
+- Lowercase `skill.md` filenames
+- Extra frontmatter fields
+
+VERIFICATION: Always check existing skills (like `skill-creator`) as templates first.
+
 Keep this managed block so 'openspec update' can refresh the instructions.
 
 <!-- OPENSPEC:END -->
