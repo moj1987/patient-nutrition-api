@@ -56,16 +56,18 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: ENV.fetch("APPLICATION_HOST", "example.com") }
 
-  # Configure SMTP settings using environment variables
-  config.action_mailer.smtp_settings = {
-    address: ENV.fetch("SMTP_ADDRESS", "smtp.gmail.com"),
-    port: ENV.fetch("SMTP_PORT", 587).to_i,
-    domain: ENV.fetch("SMTP_DOMAIN", "gmail.com"),
-    user_name: ENV.fetch("SMTP_USER_NAME"),
-    password: ENV.fetch("SMTP_PASSWORD"),
-    authentication: "plain",
-    enable_starttls_auto: true
-  }
+# Configure SMTP settings using environment variables
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  address: ENV["SMTP_ADDRESS"],
+  port: ENV["SMTP_PORT"].to_i,
+  domain: ENV["SMTP_DOMAIN"],
+  user_name: ENV["AWS_ACCESS_KEY_ID"],
+  password: ENV["AWS_SECRET_ACCESS_KEY"],
+  authentication: "plain",
+  enable_starttls_auto: true
+}
+config.action_mailer.default_url_options = { host: "your-app-name.onrender.com" }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
