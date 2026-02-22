@@ -13,6 +13,11 @@ Rails.application.routes.draw do
     resources :meals, only: [ :index, :create ]
   end
 
+  resources :patients do
+    resources :meals, only: [ :index, :create ]
+    post "meal_plans/generate", to: "meal_plans#generate"
+  end
+
   resources :food_items, only: [ :index, :show, :create ]
   resources :meals, only: [ :show ] do
     resources :meal_food_items, only: [ :create ]
