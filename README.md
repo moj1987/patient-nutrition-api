@@ -17,7 +17,8 @@ rails s
 - Food item database with nutrition data
 - Meal planning and nutrition calculation
 - Dietary restriction validation
-- JSONB for array data
+- JWT authentication
+- Meal plan generation with AWS Lambda
 
 ## Quick Start
 
@@ -25,12 +26,18 @@ rails s
 # Create patient
 curl -X POST http://localhost:3000/patients \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{"name":"John","age":45,"room_number":"101","dietary_restrictions":["gluten"],"status":"active"}'
 
 # Add food to meal
 curl -X POST http://localhost:3000/meals/1/meal_food_items \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{"meal_food_item":{"food_item_id":1,"portion_size":1.0}}'
+
+# Generate meal plan
+curl -X POST http://localhost:3000/patients/1/meal_plans/generate \
+  -H "Authorization: Bearer <token>"
 ```
 
 ## Testing

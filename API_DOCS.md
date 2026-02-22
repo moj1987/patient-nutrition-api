@@ -1,5 +1,15 @@
 # Patient Nutrition API
 
+## Authentication
+
+All endpoints (except auth) require JWT token in Authorization header:
+```
+Authorization: Bearer <token>
+```
+
+### Auth
+- `POST /auth/token` - Get JWT token
+
 ## Endpoints
 
 ### Patients
@@ -22,6 +32,9 @@
 ### Meal Food Items
 - `POST /meals/:meal_id/meal_food_items` - Add food to meal
 
+### Meal Plans
+- `POST /patients/:patient_id/meal_plans/generate` - Generate meal plan via AWS Lambda
+
 ### Utilities
 - `POST /reset_db` - Reset database (development only)
 
@@ -33,8 +46,9 @@
   "name": "string",
   "age": "integer",
   "room_number": "string",
-  "dietary_restrictions": ["gluten", "lactose", "nuts", "vegetarian", "vegan" ],
-  "status": "active"
+  "dietary_restrictions": ["gluten", "lactose", "nuts", "vegetarian", "vegan"],
+  "status": "active|discharged",
+  "admition_date": "datetime"
 }
 ```
 
@@ -46,15 +60,19 @@
   "protein": "number",
   "carbs": "number",
   "fat": "number",
-  "dietary_restrictions": ["gluten", "lactose", "nuts", "vegetarian", "vegan" ]
+  "fiber": "number",
+  "sugar": "number",
+  "sodium": "number",
+  "dietary_restrictions": ["gluten", "lactose", "nuts", "vegetarian", "vegan"]
 }
 ```
 
 ### Meal
 ```json
 {
-  "meal_type": "lunch|dinner|breakfast|snack",
+  "meal_type": "breakfast|lunch|dinner|snack",
   "status": "served|scheduled|skipped",
+  "scheduled_at": "datetime",
   "nutrition_summary": {
     "calories": 130.0,
     "protein": 3.0,
@@ -68,18 +86,26 @@
 
 - **Dietary Restriction Validation**: Prevents adding food that violates patient restrictions
 - **Nutrition Calculation**: Automatic calculation of meal nutrition data
-- **JSONB Support**: Arrays for dietary restrictions
+- **JWT Authentication**: Secure API access
+- **AWS Lambda Integration**: Meal plan generation
 
 ## Example Usage
 
 ```bash
+# Get auth token
+curl -X POST http://localhost:3000/auth/token \
+  -H "Content-Type: application/json" \
+  -d '{"email":"user@example.com","password":"password"}'
+
 # Create patient with restrictions
 curl -X POST http://localhost:3000/patients \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{"name":"John","age":45,"room_number":"101","dietary_restrictions":["gluten"],"status":"active"}'
 
 # Add food to meal (will fail if violates restrictions)
 curl -X POST http://localhost:3000/meals/1/meal_food_items \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{"meal_food_item":{"food_item_id":1,"portion_size":1.0}}'
 ```
