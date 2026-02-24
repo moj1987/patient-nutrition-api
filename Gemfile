@@ -42,6 +42,8 @@ gem "jwt"
 gem "redis"
 
 gem "aws-sdk-lambda"
+gem "sidekiq"
+gem "sidekiq-status"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
