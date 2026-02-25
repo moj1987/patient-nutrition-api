@@ -33,7 +33,7 @@ Authorization: Bearer <token>
 - `POST /meals/:meal_id/meal_food_items` - Add food to meal
 
 ### Meal Plans
-- `POST /patients/:patient_id/meal_plans/generate` - Generate meal plan via AWS Lambda
+- `POST /patients/:patient_id/meal_plans/generate` - Generate meal plan via microservices (Sidekiq + AWS Lambda + Supabase)
 
 ### Utilities
 - `POST /reset_db` - Reset database (development only)
@@ -87,7 +87,8 @@ Authorization: Bearer <token>
 - **Dietary Restriction Validation**: Prevents adding food that violates patient restrictions
 - **Nutrition Calculation**: Automatic calculation of meal nutrition data
 - **JWT Authentication**: Secure API access
-- **AWS Lambda Integration**: Meal plan generation
+- **Microservices Architecture**: Sidekiq background processing + AWS Lambda meal planning + Supabase database
+- **Real-time Food Data**: Lambda queries Supabase for up-to-date food items
 
 ## Example Usage
 
@@ -97,15 +98,11 @@ curl -X POST http://localhost:3000/auth/token \
   -H "Content-Type: application/json" \
   -d '{"email":"user@example.com","password":"password"}'
 
-# Create patient with restrictions
-curl -X POST http://localhost:3000/patients \
+# Generate meal plan (asynchronous)
+curl -X POST http://localhost:3000/patients/1/meal_plans/generate \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <token>" \
-  -d '{"name":"John","age":45,"room_number":"101","dietary_restrictions":["gluten"],"status":"active"}'
+  -d '{"period_days": 3, "target_calories": 2000, "target_protein": 50, "dietary_restrictions": ["gluten"]}'
 
-# Add food to meal (will fail if violates restrictions)
-curl -X POST http://localhost:3000/meals/1/meal_food_items \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <token>" \
-  -d '{"meal_food_item":{"food_item_id":1,"portion_size":1.0}}'
+# Response: {"message": "Meal plan generation started", "job_id": "abc123"}
 ```

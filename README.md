@@ -1,6 +1,6 @@
 # Patient Nutrition API
 
-Rails API for managing patient meals with dietary restrictions and nutrition tracking.
+Rails API with microservices architecture for patient meal planning using Sidekiq, AWS Lambda, and Supabase.
 
 ## Setup
 
@@ -8,6 +8,8 @@ Rails API for managing patient meals with dietary restrictions and nutrition tra
 bundle install
 rails db:create db:migrate
 rails db:seed
+redis-server
+bundle exec sidekiq
 rails s
 ```
 
@@ -18,26 +20,18 @@ rails s
 - Meal planning and nutrition calculation
 - Dietary restriction validation
 - JWT authentication
-- Meal plan generation with AWS Lambda
+- **Microservices Architecture**: Sidekiq + AWS Lambda + Supabase for meal plan generation
 
 ## Quick Start
 
 ```bash
-# Create patient
-curl -X POST http://localhost:3000/patients \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <token>" \
-  -d '{"name":"John","age":45,"room_number":"101","dietary_restrictions":["gluten"],"status":"active"}'
-
-# Add food to meal
-curl -X POST http://localhost:3000/meals/1/meal_food_items \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer <token>" \
-  -d '{"meal_food_item":{"food_item_id":1,"portion_size":1.0}}'
-
-# Generate meal plan
+# Generate meal plan (asynchronous)
 curl -X POST http://localhost:3000/patients/1/meal_plans/generate \
-  -H "Authorization: Bearer <token>"
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{"period_days": 3, "target_calories": 2000, "target_protein": 50, "dietary_restrictions": ["gluten"]}'
+
+# Response: {"message": "Meal plan generation started", "job_id": "abc123"}
 ```
 
 ## Testing
