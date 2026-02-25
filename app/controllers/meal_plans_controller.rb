@@ -1,26 +1,42 @@
 class MealPlansController < ApplicationController
-  include Authentication
+  # include Authentication
 
   def generate
     patient = Patient.find(params[:patient_id])
+    job_id = MealPlanWorker.perform_async(
+      patient.id,
+      params[:period_days] || 7,
+      params[:target_calories] || 2000,
+      params[:target_protein] || 50,
+      patient.dietary_restrictions || []
 
-    # Prepare payload for Lambda
-    payload = {
-      patient_id: patient.id,
-      period_days: params[:period_days] || 7,
-      target_calories: params[:target_calories] || 2000,
-      target_protein: params[:target_protein] || 50,
-      dietary_restrictions: patient.dietary_restrictions || []
-    }
+    )
 
-    # Call Lambda function
-    lambda_response = call_meal_planner_lambda(payload)
-
-    render json: lambda_response
+    render json: {
+      message: "Meal plan geneation started",
+      job_id: job_id
+    }, status: :accepted
   rescue ActiveRecord::RecordNotFound
     render json: { error: "Patient not found" }, status: :not_found
   rescue => e
     render json: { error: "Failed to generate meal plan: #{e.message}" }, status: :unprocessable_content
+  end
+
+  def status
+    job_id = params[:job_id]
+    if job_id.nil?
+      render json: { error: "Job ID is required" }, status: :bad_request
+      return
+    end
+    if Sidekiq::Status.working?(job_id)
+      render json: { status: "processing", job_id: job_id }
+    elsif Sidekiq::Status.complete?(job_id)
+      render json: { status: "completed", job_id: job_id }
+    elsif Sidekiq::Status.failed?(job_id)
+      render json: { status: "failed", job_id: job_id }
+    else
+      render json: { status: "not_found", job_id: job_id }, status: :not_found
+    end
   end
 
   private

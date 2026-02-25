@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  include Authentication
+  # include Authentication
 
   def index
     @patients = Patient.all

@@ -29,4 +29,8 @@ Rails.application.routes.draw do
   resources :meals, only: [ :show ] do
     resources :meal_food_items, only: [ :create ]
   end
+
+  resources :meal_plans, only: [] do
+    get :status, on: :collection
+  end
 end
