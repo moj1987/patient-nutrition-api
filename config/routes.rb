@@ -31,6 +31,6 @@ Rails.application.routes.draw do
   end
 
   resources :meal_plans, only: [] do
-    get :status, on: :collection
+    # get :status, on: :collection
   end
 end
