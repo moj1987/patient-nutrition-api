@@ -1,5 +1,5 @@
 class MealPlansController < ApplicationController
-  # include Authentication
+  include Authentication
 
   def generate
     patient = Patient.find(params[:patient_id])
