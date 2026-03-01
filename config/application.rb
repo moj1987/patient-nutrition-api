@@ -2,9 +2,12 @@ require_relative "boot"
 
 require "rails/all"
 
-# Require the gems listed in Gemfile, including any gems
+# Require gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+# Load .env only in development
+Dotenv.load if Rails.env.development?
 
 module PatientNutritionApi
   class Application < Rails::Application
