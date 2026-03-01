@@ -1,16 +1,10 @@
 FROM ruby:3.4
 WORKDIR /app
 
-# Install dependencies
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --deployment --without development test
+RUN bundle install
 
-# Copy application code
 COPY . .
 
-# Set environment
 ENV RAILS_ENV=production
-ENV RACK_ENV=production
-
-# Start Sidekiq
-CMD ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
+CMD ["bundle", "exec", "sidekiq"]
