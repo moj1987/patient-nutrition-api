@@ -9,11 +9,10 @@ class MealPlansController < ApplicationController
       params[:target_calories] || 2000,
       params[:target_protein] || 50,
       patient.dietary_restrictions || []
-
     )
 
     render json: {
-      message: "Meal plan geneation started",
+      message: "Meal plan generation started",
       job_id: job_id
     }, status: :accepted
   rescue ActiveRecord::RecordNotFound
