@@ -11,10 +11,6 @@ Rails.application.routes.draw do
   # Protected endpoints (require authentication)
   resources :patients, except: [ :new, :edit ] do
     resources :meals, only: [ :index, :create ]
-  end
-
-  resources :patients do
-    resources :meals, only: [ :index, :create ]
     post "meal_plans/generate", to: "meal_plans#generate"
   end
 
@@ -23,10 +19,7 @@ Rails.application.routes.draw do
     resources :meal_food_items, only: [ :create ]
   end
 
-  get "/patients/:patient_id/meals", to: "meals#index"
-  post "/patients/:patient_id/meals", to: "meals#create"
-
-  resources :meals, only: [ :show ] do
-    resources :meal_food_items, only: [ :create ]
+  resources :meal_plans, only: [] do
+    # get :status, on: :collection
   end
 end
